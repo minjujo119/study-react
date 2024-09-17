@@ -19,6 +19,7 @@ const Register = () => {
   // 레퍼런스 객체
   const countRef = useRef(0);
   const inputRef = useRef();
+  console.log(inputRef.current)
 
   // 통합 이벤트 핸들러 만들기
   const onChange =(e)=>{
