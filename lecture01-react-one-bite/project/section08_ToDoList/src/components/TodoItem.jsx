@@ -11,6 +11,8 @@ const TodoItem =({id,isDone,content,date,onUpdate,onDelete})=>{
     onDelete(id);
   }
 
+  console.log('test')
+
   return (
     <div className="TodoItem">
       <input onChange={onChangeCheckbox} checked={isDone} type="checkbox" />
