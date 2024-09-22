@@ -2,20 +2,22 @@ import { useState, useRef, useEffect } from "react";
 import "./List.css"
 import TodoItem from "./TodoItem";
 
-const List =({todos})=>{
+const List =({todos, onUpdate, onDelete})=>{
 
   const [search, setSearch] = useState("");
   const onChangeSearch =(e)=>{
     setSearch(e.target.value);
   }
 
+  // 검색 기능
   const getFilteredData =()=>{
     if(search === ""){
       return todos;
     }
-    return todos.filter((todo)=> todo.content.includes(search));
+    return todos.filter((todo)=> 
+      todo.content.toLowerCase().includes(search.toLowerCase())
+    );
   }
-
   const filteredTodos = getFilteredData();
 
   return (
@@ -29,7 +31,14 @@ const List =({todos})=>{
       />
       <div className="todo_wrapper">
         {filteredTodos.map((todo)=>{
-          return <TodoItem key={todo.id} {...todo}/>
+          return (
+            <TodoItem 
+              key={todo.id} 
+              {...todo} 
+              onUpdate={onUpdate}
+              onDelete={onDelete}
+            />
+          )
         })}
       </div>
     </div>
