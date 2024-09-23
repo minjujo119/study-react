@@ -1,5 +1,5 @@
 import './App.css'
-import { useState, useRef, useReducer } from 'react';
+import { useRef, useReducer } from 'react';
 import Header from './components/Header';
 import Editor from './components/Editor';
 import List from './components/List';
@@ -26,6 +26,7 @@ const mockData =[
   },
 ]
 
+// reducer 함수
 function reducer(state, action){
   switch(action.type){
     case "CREATE" : 
