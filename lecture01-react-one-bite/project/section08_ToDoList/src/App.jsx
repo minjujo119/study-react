@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import Header from './components/Header';
 import Editor from './components/Editor';
 import List from './components/List';
+import Exam from './components/Exam';
 
 // 리렌더링 되지 않게 컴포넌트 외부에 생성
 const mockData =[
@@ -58,9 +59,10 @@ function App() {
   
   return (
     <div className='App'>
-      <Header/>
+      <Exam />
+      {/* <Header/>
       <Editor onCreate={onCreate}/>
-      <List onUpdate={onUpdate} onDelete={onDelete} todos={todos}/>
+      <List onUpdate={onUpdate} onDelete={onDelete} todos={todos}/> */}
     </div>
   )
 }
