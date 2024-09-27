@@ -1,7 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import "./Editor.css"
+import { TodoDispatchContext } from "../App";
 
-const Editor =({onCreate})=>{
+const Editor =()=>{
+
+  // 부모 컴포넌트에서 내보낸 Context를 불러와서 변수에 저장
+  const {onCreate} = useContext(TodoDispatchContext)
   const [content, setContent] = useState("");
   const contentRef = useRef();
 

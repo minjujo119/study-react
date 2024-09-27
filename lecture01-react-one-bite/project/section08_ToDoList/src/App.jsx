@@ -1,5 +1,5 @@
 import './App.css'
-import { useRef, useReducer, useCallback } from 'react';
+import { useRef, useReducer, useCallback, createContext, useMemo } from 'react';
 import Header from './components/Header';
 import Editor from './components/Editor';
 import List from './components/List';
@@ -44,6 +44,13 @@ function reducer(state, action){
   } 
 }
 
+// 컨텍스트 개체는 컴포넌트 외부에 생성
+// prop을 손자에게 다이렉트로 전달 가능
+// 다른 파일에 있는 컴포넌트에서 사용해야하기 때문에 export로 내보내기
+export const TodoStateContext = createContext();
+export const TodoDispatchContext = createContext();
+
+
 function App() {
 
   const [todos, dispatch] = useReducer(reducer, mockData);
@@ -67,29 +74,29 @@ function App() {
       targetID : targetID
     })
   },[])
-  
-  // useCallback 사용 전 원래 함수
-  // todos 배열에서 targetID와 일치하는 id를 갖는 요소만 삭제한 새로운 배열
-  // const onDelete=(targetID)=>{
-  //   dispatch({
-  //     type : "DELETE",
-  //     targetID : targetID
-  //   })
-  // }
 
   const onDelete = useCallback((targetID)=>{
     dispatch({
       type : "DELETE",
-      targetID : targetID
+      targetID : targeID
     })
   },[])
 
+  const memoizedDispatch = useMemo(()=>{
+    return {onCreate, onUpdate, onDelete}
+  },[])
 
   return (
     <div className='App'>
-      <Header/>
-      <Editor onCreate={onCreate}/>
-      <List onUpdate={onUpdate} onDelete={onDelete} todos={todos}/>
+      <Header />
+      {/* todos는 전체 컴포넌트에 전달해야하고, props가 가변적임 */}
+      <TodoStateContext.Provider value={todos}>
+        {/* onCreate, onUpdate, onDelete함수는 마운트 이후 리렌더링이 되지 않도록 memoization 함 */}
+        <TodoDispatchContext.Provider value={memoizedDispatch}>
+          <Editor />
+          <List />
+        </TodoDispatchContext.Provider>
+      </TodoStateContext.Provider> 
     </div>
   )
 }
