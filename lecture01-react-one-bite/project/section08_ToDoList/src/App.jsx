@@ -1,5 +1,5 @@
 import './App.css'
-import { useRef, useReducer } from 'react';
+import { useRef, useReducer, useCallback } from 'react';
 import Header from './components/Header';
 import Editor from './components/Editor';
 import List from './components/List';
@@ -49,7 +49,8 @@ function App() {
   const [todos, dispatch] = useReducer(reducer, mockData);
   const idRef = useRef(3);
 
-  const onCreate =(content)=>{
+  // useCallback을 사용하여 컴포넌트 내 함수들을 메모이제이션(최적화)하기
+  const onCreate = useCallback((content)=>{
     dispatch({
       type : "CREATE",
       data : {
@@ -59,20 +60,30 @@ function App() {
         date: new Date().getTime()
       }
     })
-  }
-  const onUpdate=(targetID)=>{
+  },[])
+  const onUpdate = useCallback((targetID)=>{
     dispatch({
       type: "UPDATE",
       targetID : targetID
     })
-  }
+  },[])
+  
+  // useCallback 사용 전 원래 함수
   // todos 배열에서 targetID와 일치하는 id를 갖는 요소만 삭제한 새로운 배열
-  const onDelete=(targetID)=>{
+  // const onDelete=(targetID)=>{
+  //   dispatch({
+  //     type : "DELETE",
+  //     targetID : targetID
+  //   })
+  // }
+
+  const onDelete = useCallback((targetID)=>{
     dispatch({
       type : "DELETE",
       targetID : targetID
     })
-  }
+  },[])
+
 
   return (
     <div className='App'>

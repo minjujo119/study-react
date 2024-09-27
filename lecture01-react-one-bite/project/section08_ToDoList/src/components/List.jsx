@@ -20,14 +20,13 @@ const List =({todos, onUpdate, onDelete})=>{
   }
   const filteredTodos = getFilteredData();
 
-  // getAnalyzedData함수를 useMemo로 기억하게 함
+  // 함수를 useMemo로 기억하게 함
   // List 컴포넌트가 리렌더링될 때마다 연산되지 않게 함
   // [todos] deps가 변화할때만 연산됨
   const {totalCount, doneCount, notDoneCount} = useMemo(()=>{
     const totalCount = todos.length;
     const doneCount = todos.filter((todo)=>todo.isDone).length;
     const notDoneCount = totalCount - doneCount;
-    console.log('yes')
     return {
       totalCount,
       doneCount,

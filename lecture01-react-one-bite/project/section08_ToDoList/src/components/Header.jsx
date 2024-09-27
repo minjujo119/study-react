@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, memo } from "react";
 import "./Header.css"
 
 const Header =()=>{
@@ -10,4 +10,5 @@ const Header =()=>{
   )
 };
 
-export default Header;
+// memo 내장함수로 컴포넌트 자체를 최적화하기
+export default memo(Header);

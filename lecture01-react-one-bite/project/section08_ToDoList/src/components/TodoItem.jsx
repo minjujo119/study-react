@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, memo } from "react";
 import "./TodoItem.css"
 
 const TodoItem =({id,isDone,content,date,onUpdate,onDelete})=>{
@@ -21,4 +21,20 @@ const TodoItem =({id,isDone,content,date,onUpdate,onDelete})=>{
   )
 };
 
-export default TodoItem;
+
+// 고차 컴포넌트 (Higer Order Component, HOC)
+// memo와 같이 새로운 기능이 부여된 컴포넌트
+// props가 계속 바뀌는 컴포넌트는 memo()에게 두번째 인수로서
+// props가 바뀌었는지 판단해주는 콜백함수를 넘겨줘야 함
+// export default memo(TodoItem, (prevProps, nextProps)=>{
+//   // True -> Props가 바뀌지 않음 -> 리렌더링 X
+//   // False ->Props가 바뀜 -> 리렌더링 O
+//   if(prevProps.id !== nextProps.id) return false;
+//   if(prevProps.isDone !== nextProps.isDone) return false;
+//   if(prevProps.content !== nextProps.content) return false;
+//   if(prevProps.date !== nextProps.date) return false;
+
+//   return true;
+// });
+
+export default memo(TodoItem);
